@@ -17,9 +17,11 @@ class ContactController extends Controller{
 
     public function send(){
         $model = new Contact();
-        dump($model);
         $model->loadData();
-        dump($model);
+        if(!$model->validate()){//Есть ошибки!
+            return view('contact', ['title'=>'Страница контактов', 'errors' => $model->getErrors()]);
+        }
+        response()->redirect('/');
         return 'Contact form POST page';
     }
 

@@ -37,7 +37,7 @@ abstract class Model{
      * Валидация, проверка по указанным правилам $rules
      * @return void
      */
-    public function validate(){
+    public function validate(): bool {
         foreach ($this->attributes as $fieldname => $value){
             if(isset($this->rules[$fieldname])){
                 $this->check([
@@ -47,19 +47,36 @@ abstract class Model{
                 ]);
             }
         }
+        return !$this->hasErrors();
     }
 
     protected function check(array $field):void{
         foreach($field['rules'] as $rule => $rule_value){
             if (in_array($rule, $this->rules_list)){
                 if(!call_user_func_array([$this, $rule], [$field['value'], $rule_value])){
-
+                    $this->addError(
+                        $field['fieldname'],
+                        str_replace(
+                            [':fieldname:',':rulevalue:'],
+                            [$field['fieldname'], $rule_value],
+                            $this->messages[$rule]
+                        )
+                    );
                 }
             }
         }
     }
+    protected function addError($fielName, $error):void{
+        $this->errors[$fielName][] = $error;
+    }
+    public function getErrors(){
+        return $this->errors;
+    }
+    protected function hasErrors(): bool{
+        return !empty($this->errors);
+    }
     protected function required($value, $rule_value):bool{
-        return empty(trim($value));
+        return !empty(trim($value));
     }
     protected function min($value, $rule_value):bool{
         return mb_strlen($value, 'UTF-8') >= $rule_value;

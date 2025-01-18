@@ -9,7 +9,7 @@ class Contact extends Model{
     public array $rules = [
         'name' => ['required' => true],
         'email' => ['email' => true, 'min' => 3, 'max' => 30],
-        'content' => ['min' => 20, 'max' => 30]
+        'content' => ['min' => 20, 'max' => 100]
     ];
 
 }
