@@ -21,6 +21,13 @@ class Request{
         return strtoupper($_SERVER['REQUEST_METHOD']);
     }
 
+    public function isGet():bool{
+        return $this->getMethod() == 'GET';
+    }
+    public function isPost():bool{
+        return $this->getMethod() == 'POST';
+    }
+
     /**
      * Получение основного метода
      * @return string
@@ -38,5 +45,20 @@ class Request{
     public function get($name, $default = null): ?string{
         return $_GET[$name]?? $default;
     }
+    public function post($name, $default = null): ?string{
+        return $_POST[$name]?? $default;
+    }
 
+    /**
+     * Обрабатываем пришедшие данные
+     * @return array
+     */
+    public function getData():array{
+        $data = [];
+        $request_data = $this->isGet() ? $_GET : $_POST;
+        foreach ($request_data as $k => $v) {
+            $data[$k] = trim($v);
+        }
+        return $data;
+    }
 }
