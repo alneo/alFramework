@@ -40,7 +40,7 @@ class Router{
         $callback = $this->routes[$method]['/'.$path] ?? false;
         if(false === $callback){
             $this->response->setResponseCode(404);
-            return 'Page not found';
+            return view('errors/404');
         }
         if (is_array($callback)){
 //            $action = $callback[1];
