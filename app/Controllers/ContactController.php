@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\Contact;
 use PHPFramework\Controller;
 
 class ContactController extends Controller{
@@ -15,9 +16,10 @@ class ContactController extends Controller{
     }
 
     public function send(){
-        dump($_POST);
-        dump(app()->request->getData());
-        dump(request()->getData());
+        $model = new Contact();
+        dump($model);
+        $model->loadData();
+        dump($model);
         return 'Contact form POST page';
     }
 
