@@ -10,7 +10,7 @@ class Request{
     }
 
     public function getPath():string{
-        return $this->uri;
+        return $this->removeQueryString();
     }
 
     /**
@@ -20,4 +20,23 @@ class Request{
     public function getMethod():string{
         return strtoupper($_SERVER['REQUEST_METHOD']);
     }
+
+    /**
+     * Получение основного метода
+     * @return string
+     */
+    public function removeQueryString(): string{
+        if($this->uri){
+            $params = explode('&',$this->uri);
+            if(false === str_contains($params,'=')){
+                return trim($params[0],'/');
+            }
+        }
+        return "";
+    }
+
+    public function get($name, $default = null): ?string{
+        return $_GET[$name]?? $default;
+    }
+
 }
