@@ -1,7 +1,7 @@
 <?php
 /* @var \PHPFramework\Application $app */
 $app->router->get('/', function(){//Если не нужен контроллер
-    return view('main');
+    return view('main', ['title' => 'Home page'], 'default');
 });
 $app->router->get('/about', function(){//Если не нужен контроллер
     return view('about');
