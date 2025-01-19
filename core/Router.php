@@ -39,13 +39,11 @@ class Router{
         //Получение и проверка callback функции
         $callback = $this->routes[$method]['/'.$path] ?? false;
         if(false === $callback){
-            $this->response->setResponseCode(404);
-            return view('errors/404');
+            abort();
+            //$this->response->setResponseCode(404);
+            //return view('errors/404');
         }
         if (is_array($callback)){
-//            $action = $callback[1];
-//            $object = new $callback[0];
-//            return  $object->$action();
             $callback[0] = new $callback[0];
         }
         return call_user_func($callback);

@@ -20,8 +20,9 @@ class View
             require $view_file;
             $this->content = ob_get_clean();
         } else {
-            app()->response->setResponseCode(500);
-            return view('errors/500', ['error' => "Not found view {$view_file}"], false);
+            abort("Not found view {$view_file}", 500);
+            //app()->response->setResponseCode(500);
+            //return view('errors/500', ['error' => "Not found view {$view_file}"], false);
         }
 
         if (false === $layout) {
@@ -36,8 +37,9 @@ class View
             require_once $layout_file;
             return ob_get_clean();
         } else {
-            app()->response->setResponseCode(500);
-            return view('errors/500', ['error' => "Not found layout {$layout_file}"], false);
+            abort("Not found layout {$layout_file}", 500);
+            //app()->response->setResponseCode(500);
+            //return view('errors/500', ['error' => "Not found layout {$layout_file}"], false);
 
         }
     }

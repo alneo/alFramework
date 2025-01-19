@@ -9,6 +9,7 @@ abstract class Model{
     public array $fillable = [];                                //Разрешенные для записи данные
     public array $attributes = [];                              //данные которые пойдут в БД или дальше отрабатывать
     protected array $rules = [];                                //Правила валидации
+    protected array $labels = [];                                //Имена полей
     protected array $errors = [];                               //Ошибки валидации
     protected array $rules_list = ['required','min','max'];     //Правила валидации
                                                                 //Тексты валидационных ошибок (:fieldname:-плайсхолдер)
@@ -58,7 +59,7 @@ abstract class Model{
                         $field['fieldname'],
                         str_replace(
                             [':fieldname:',':rulevalue:'],
-                            [$field['fieldname'], $rule_value],
+                            [$this->labels[$field['fieldname']] ?? $field['fieldname'], $rule_value],
                             $this->messages[$rule]
                         )
                     );

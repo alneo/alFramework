@@ -11,5 +11,6 @@ class Contact extends Model{
         'email' => ['email' => true, 'min' => 3, 'max' => 30],
         'content' => ['min' => 20, 'max' => 100]
     ];
+    public array $labels = ['name'=>'Имя', 'email'=>'E-mail', 'content'=>'Сообщение' ];
 
 }
